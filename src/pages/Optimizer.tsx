@@ -34,13 +34,13 @@ export default function Optimizer() {
 
       setResult(data);
       toast({
-        title: "Optimization Complete",
+        title: "✨ Optimization Complete",
         description: `Saved ${data.tokensSaved} tokens and ${data.co2SavedKg.toFixed(6)} kg CO₂`,
       });
     } catch (error: any) {
       console.error("Optimization error:", error);
       toast({
-        title: "Optimization Failed",
+        title: "❌ Optimization Failed",
         description: error.message,
         variant: "destructive",
       });
@@ -55,7 +55,7 @@ export default function Optimizer() {
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
       toast({
-        title: "Copied!",
+        title: "📋 Copied!",
         description: "Optimized prompt copied to clipboard",
       });
     }
@@ -72,7 +72,7 @@ export default function Optimizer() {
 
       <div className="grid gap-6 lg:grid-cols-2">
         {/* Input */}
-        <Card>
+        <Card className="hover:shadow-lg transition-shadow duration-300">
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
               <Sparkles className="h-5 w-5 text-accent" />
