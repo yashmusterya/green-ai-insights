@@ -57,7 +57,7 @@ export default function Recommendations() {
       </div>
 
       {recommendations.length === 0 ? (
-        <Card>
+        <Card className="hover:shadow-lg transition-shadow duration-300">
           <CardContent className="pt-6 text-center text-muted-foreground">
             <Lightbulb className="h-12 w-12 mx-auto mb-4 opacity-50" />
             <p>No recommendations yet. Calculate some emissions first to get personalized suggestions!</p>

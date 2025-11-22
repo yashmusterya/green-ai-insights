@@ -44,13 +44,13 @@ export default function Calculator() {
 
       setResults(data);
       toast({
-        title: "Calculation Complete",
+        title: "✅ Calculation Complete",
         description: "Your emissions have been calculated successfully",
       });
     } catch (error: any) {
       console.error("Calculation error:", error);
       toast({
-        title: "Calculation Failed",
+        title: "❌ Calculation Failed",
         description: error.message,
         variant: "destructive",
       });
@@ -67,12 +67,12 @@ export default function Calculator() {
       </div>
 
       <div className="grid gap-6 lg:grid-cols-2">
-        {/* Input Form */}
-        <Card>
-          <CardHeader>
-            <CardTitle>Workload Details</CardTitle>
-            <CardDescription>Enter your AI model and infrastructure information</CardDescription>
-          </CardHeader>
+      {/* Input Form */}
+      <Card className="hover:shadow-lg transition-shadow duration-300">
+        <CardHeader>
+          <CardTitle>Workload Details</CardTitle>
+          <CardDescription>Enter your AI model and infrastructure information</CardDescription>
+        </CardHeader>
           <CardContent className="space-y-4">
             <div className="space-y-2">
               <Label htmlFor="modelName">AI Model *</Label>

@@ -8,9 +8,9 @@ All colors MUST be HSL.
 
 @layer base {
   :root {
-    /* EcoTech Minimalism Theme */
-    --background: 120 25% 97%;  /* Soft White #F4F9F4 */
-    --foreground: 0 0% 10%;  /* Carbon Black #1A1A1A */
+    /* EcoTech Minimalism Light Theme */
+    --background: 120 25% 97%;
+    --foreground: 0 0% 10%;
 
     --card: 0 0% 100%;
     --card-foreground: 0 0% 10%;
@@ -18,16 +18,16 @@ All colors MUST be HSL.
     --popover: 0 0% 100%;
     --popover-foreground: 0 0% 10%;
 
-    --primary: 145 54% 49%;  /* Eco Green #3CBF5C */
+    --primary: 145 54% 49%;
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 145 58% 29%;  /* Forest Green #1F773C */
+    --secondary: 145 58% 29%;
     --secondary-foreground: 0 0% 100%;
 
     --muted: 120 20% 94%;
     --muted-foreground: 145 25% 35%;
 
-    --accent: 75 89% 63%;  /* Energy Lime #B5F54D */
+    --accent: 75 89% 63%;
     --accent-foreground: 0 0% 10%;
 
     --destructive: 0 84.2% 60.2%;
@@ -48,76 +48,130 @@ All colors MUST be HSL.
     /* Gradients */
     --gradient-eco: linear-gradient(135deg, hsl(145 54% 49%) 0%, hsl(199 89% 62%) 100%);
     --gradient-earth: linear-gradient(180deg, hsl(145 58% 29%) 0%, hsl(145 54% 49%) 100%);
+    --gradient-bg: linear-gradient(135deg, hsl(145 54% 49% / 0.03) 0%, hsl(199 89% 62% / 0.03) 100%);
     
     /* Shadows */
     --shadow-sm: 0 2px 8px hsl(145 54% 49% / 0.1);
     --shadow-md: 0 4px 16px hsl(145 54% 49% / 0.15);
     --shadow-lg: 0 8px 32px hsl(145 54% 49% / 0.2);
+    --shadow-glow: 0 0 20px hsl(145 54% 49% / 0.3);
 
-    --radius: 0.5rem;
+    --radius: 0.75rem;
 
     --sidebar-background: 0 0% 98%;
-
     --sidebar-foreground: 240 5.3% 26.1%;
-
     --sidebar-primary: 240 5.9% 10%;
-
     --sidebar-primary-foreground: 0 0% 98%;
-
     --sidebar-accent: 240 4.8% 95.9%;
-
     --sidebar-accent-foreground: 240 5.9% 10%;
-
     --sidebar-border: 220 13% 91%;
-
     --sidebar-ring: 217.2 91.2% 59.8%;
   }
 
   .dark {
-    --background: 0 0% 10%;  /* Carbon Black */
-    --foreground: 120 25% 97%;
+    /* EcoTech Dark Mode - Green Night Palette */
+    --background: 145 65% 6%;
+    --foreground: 145 30% 85%;
 
-    --card: 0 0% 12%;
-    --card-foreground: 120 25% 97%;
+    --card: 145 50% 8%;
+    --card-foreground: 145 30% 85%;
 
-    --popover: 0 0% 12%;
-    --popover-foreground: 120 25% 97%;
+    --popover: 145 50% 8%;
+    --popover-foreground: 145 30% 85%;
 
-    --primary: 145 54% 49%;
-    --primary-foreground: 0 0% 100%;
+    --primary: 75 89% 63%;
+    --primary-foreground: 145 65% 6%;
 
-    --secondary: 145 58% 29%;
-    --secondary-foreground: 0 0% 100%;
+    --secondary: 145 50% 22%;
+    --secondary-foreground: 145 30% 85%;
 
-    --muted: 0 0% 18%;
+    --muted: 145 40% 12%;
     --muted-foreground: 145 30% 70%;
 
-    --accent: 75 89% 63%;
-    --accent-foreground: 0 0% 10%;
+    --accent: 145 54% 49%;
+    --accent-foreground: 145 65% 6%;
 
     --destructive: 0 62.8% 50%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 0 0% 20%;
-    --input: 0 0% 18%;
-    --ring: 145 54% 49%;
-    --sidebar-background: 240 5.9% 10%;
-    --sidebar-foreground: 240 4.8% 95.9%;
-    --sidebar-primary: 224.3 76.3% 48%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 240 3.7% 15.9%;
-    --sidebar-accent-foreground: 240 4.8% 95.9%;
-    --sidebar-border: 240 3.7% 15.9%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    --border: 145 40% 18%;
+    --input: 145 40% 15%;
+    --ring: 75 89% 63%;
+
+    /* Custom dark sustainability colors */
+    --eco-green: 145 54% 49%;
+    --forest-green: 145 50% 22%;
+    --energy-lime: 75 89% 63%;
+    --sky-blue: 199 89% 62%;
+    --warm-yellow: 44 86% 62%;
+    
+    /* Dark gradients */
+    --gradient-eco: linear-gradient(135deg, hsl(145 54% 49%) 0%, hsl(199 89% 62%) 100%);
+    --gradient-earth: linear-gradient(180deg, hsl(145 50% 22%) 0%, hsl(145 54% 49%) 100%);
+    --gradient-bg: linear-gradient(135deg, hsl(145 54% 49% / 0.05) 0%, hsl(199 89% 62% / 0.05) 100%);
+    
+    /* Dark shadows */
+    --shadow-sm: 0 2px 8px hsl(0 0% 0% / 0.3);
+    --shadow-md: 0 4px 16px hsl(0 0% 0% / 0.4);
+    --shadow-lg: 0 8px 32px hsl(0 0% 0% / 0.5);
+    --shadow-glow: 0 0 20px hsl(145 54% 49% / 0.4);
+
+    --sidebar-background: 145 60% 5%;
+    --sidebar-foreground: 145 30% 85%;
+    --sidebar-primary: 75 89% 63%;
+    --sidebar-primary-foreground: 145 65% 6%;
+    --sidebar-accent: 145 40% 12%;
+    --sidebar-accent-foreground: 145 30% 85%;
+    --sidebar-border: 145 40% 15%;
+    --sidebar-ring: 75 89% 63%;
   }
 }
 
 @layer base {
   * {
-    @apply border-border;
+    @apply border-border transition-colors duration-300;
   }
 
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground cursor-none;
+    background-image: var(--gradient-bg);
+  }
+
+  /* Custom Eco Cursor */
+  .eco-cursor {
+    position: fixed;
+    width: 12px;
+    height: 12px;
+    background: hsl(var(--primary));
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9999;
+    transform: translate(-50%, -50%);
+    transition: transform 0.15s ease-out, background 0.2s;
+    box-shadow: 0 0 10px hsl(var(--primary) / 0.6);
+  }
+
+  .eco-cursor-glow {
+    position: fixed;
+    width: 32px;
+    height: 32px;
+    border: 2px solid hsl(var(--primary) / 0.3);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9998;
+    transform: translate(-50%, -50%);
+    transition: all 0.15s ease-out;
+  }
+
+  .eco-cursor-glow.hovering {
+    width: 48px;
+    height: 48px;
+    border-color: hsl(var(--primary) / 0.5);
+    box-shadow: 0 0 15px hsl(var(--primary) / 0.4);
+  }
+
+  /* Smooth transitions for theme switching */
+  html {
+    transition: background-color 0.3s ease, color 0.3s ease;
   }
 }
