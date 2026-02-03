@@ -7,6 +7,7 @@ import { ThemeProvider } from "./contexts/ThemeContext";
 import { AuthProvider } from "./contexts/AuthContext";
 import { Layout } from "./components/Layout";
 import { ProtectedRoute } from "./components/ProtectedRoute";
+import { AIChatbot } from "./components/AIChatbot";
 import Dashboard from "./pages/Dashboard";
 import Calculator from "./pages/Calculator";
 import Optimizer from "./pages/Optimizer";
@@ -68,6 +69,7 @@ const App = () => (
               />
               <Route path="*" element={<NotFound />} />
             </Routes>
+            <AIChatbot />
           </BrowserRouter>
         </TooltipProvider>
       </AuthProvider>

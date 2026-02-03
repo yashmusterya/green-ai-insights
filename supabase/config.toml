@@ -1,1 +1,13 @@
 project_id = "pcvtxzlqnbhxlgjnpfsc"
+
+[functions.calculate-emissions]
+verify_jwt = false
+
+[functions.optimize-prompt]
+verify_jwt = false
+
+[functions.get-recommendations]
+verify_jwt = false
+
+[functions.chat]
+verify_jwt = false
