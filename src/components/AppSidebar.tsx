@@ -1,6 +1,8 @@
-import { LayoutDashboard, Calculator, Sparkles, Lightbulb } from "lucide-react";
+import { LayoutDashboard, Calculator, Sparkles, Lightbulb, LogOut } from "lucide-react";
 import { NavLink } from "@/components/NavLink";
 import { useLocation } from "react-router-dom";
+import { useAuth } from "@/contexts/AuthContext";
+import { Button } from "@/components/ui/button";
 
 import {
   Sidebar,
@@ -11,6 +13,7 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
+  SidebarFooter,
   useSidebar,
 } from "@/components/ui/sidebar";
 
@@ -24,6 +27,7 @@ const items = [
 export function AppSidebar() {
   const { open } = useSidebar();
   const location = useLocation();
+  const { user, signOut } = useAuth();
   const currentPath = location.pathname;
 
   const isActive = (path: string) => currentPath === path;
@@ -54,6 +58,26 @@ export function AppSidebar() {
           </SidebarGroupContent>
         </SidebarGroup>
       </SidebarContent>
+      <SidebarFooter className="p-2">
+        {user && (
+          <div className="space-y-2">
+            {open && (
+              <p className="text-xs text-muted-foreground truncate px-2">
+                {user.email}
+              </p>
+            )}
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={signOut}
+              className="w-full justify-start text-muted-foreground hover:text-destructive"
+            >
+              <LogOut className="h-4 w-4" />
+              {open && <span className="ml-2">Sign Out</span>}
+            </Button>
+          </div>
+        )}
+      </SidebarFooter>
     </Sidebar>
   );
 }
