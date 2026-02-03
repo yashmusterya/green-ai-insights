@@ -88,42 +88,50 @@ export default function Dashboard() {
         });
         setRegionData(Array.from(regionMap.values()));
       } else {
-        // Dummy data for demonstration
+        // Expanded Dummy Data for a Premium, "Lived-in" Look
         setStats({
-          totalCalculations: 124,
-          totalCO2: 45.2,
-          avgScore: 78,
-          totalEnergy: 128.5,
+          totalCalculations: 1248,
+          totalCO2: 845.2,
+          avgScore: 72,
+          totalEnergy: 3420.5,
         });
 
-        setTrendData([
-          { date: "1/20", co2: 5.2, energy: 12.1 },
-          { date: "1/21", co2: 4.8, energy: 11.5 },
-          { date: "1/22", co2: 6.1, energy: 14.2 },
-          { date: "1/23", co2: 5.5, energy: 12.8 },
-          { date: "1/24", co2: 7.2, energy: 16.5 },
-          { date: "1/25", co2: 6.8, energy: 15.1 },
-          { date: "1/26", co2: 5.9, energy: 13.7 },
-        ]);
+        // Generate 30 days of trend data
+        const trends = [];
+        const today = new Date();
+        for (let i = 29; i >= 0; i--) {
+          const date = new Date(today);
+          date.setDate(date.getDate() - i);
+          trends.push({
+            date: date.toLocaleDateString("en-US", { month: "short", day: "numeric" }),
+            co2: (Math.random() * 5 + 5 + Math.sin(i / 3) * 2).toFixed(1), // Random organic-looking data
+            energy: (Math.random() * 10 + 15 + Math.sin(i / 3) * 4).toFixed(1)
+          });
+        }
+        setTrendData(trends);
 
         setModelData([
-          { name: "gpt-4", co2: 18.5, count: 45 },
-          { name: "claude-3-opus", co2: 12.2, count: 30 },
-          { name: "llama-2-70b", co2: 8.4, count: 25 },
-          { name: "gemini-pro", co2: 4.1, count: 15 },
-          { name: "mistral-large", co2: 2.0, count: 9 },
+          { name: "gpt-4", co2: 245.5, count: 450 },
+          { name: "claude-3-opus", co2: 180.2, count: 320 },
+          { name: "gpt-4o", co2: 120.8, count: 280 },
+          { name: "llama-3-70b", co2: 95.4, count: 150 },
+          { name: "gemini-1.5-pro", co2: 85.1, count: 145 },
+          { name: "mistral-large", co2: 45.0, count: 90 },
+          { name: "claude-3-sonnet", co2: 32.5, count: 85 },
         ]);
 
         setRegionData([
           { name: "us-east-1", value: 450 },
-          { name: "eu-west-1", value: 280 },
-          { name: "asia-pacific", value: 150 },
-          { name: "us-west-2", value: 120 },
+          { name: "eu-north-1", value: 120 }, // Sweden - very green
+          { name: "eu-west-1", value: 280 }, // Ireland
+          { name: "us-west-2", value: 150 }, // Oregon
+          { name: "asia-pacific", value: 550 },
+          { name: "sa-east-1", value: 180 }, // Brazil
         ]);
 
         toast({
-          title: "Demo Mode",
-          description: "Showing sample data for visual demonstration.",
+          title: "Demo Mode Enabled",
+          description: "Visualizing rich sample dataset.",
           duration: 3000,
         });
       }
