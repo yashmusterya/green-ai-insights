@@ -7,16 +7,16 @@ const corsHeaders = {
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type, x-supabase-client-platform, x-supabase-client-platform-version, x-supabase-client-runtime, x-supabase-client-runtime-version',
 };
 
-const LOVABLE_API_KEY = Deno.env.get('LOVABLE_API_KEY');
+const GEMINI_API_KEY = Deno.env.get('GEMINI_API_KEY');
 
 // UUID validation regex
 const UUID_REGEX = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
 
 // Input validation
-function validateInput(data: unknown): { 
-  valid: boolean; 
-  error?: string; 
-  parsed?: { calculationId: string; modelName: string; tokens: number; cloudRegion: string; co2Kg: number } 
+function validateInput(data: unknown): {
+  valid: boolean;
+  error?: string;
+  parsed?: { calculationId: string; modelName: string; tokens: number; cloudRegion: string; co2Kg: number }
 } {
   if (!data || typeof data !== 'object') {
     return { valid: false, error: 'Invalid request body' };
@@ -53,15 +53,15 @@ function validateInput(data: unknown): {
   const sanitizedModelName = modelName.replace(/[^a-zA-Z0-9-_.]/g, '').slice(0, 100);
   const sanitizedCloudRegion = cloudRegion.replace(/[^a-zA-Z0-9-_]/g, '').slice(0, 50);
 
-  return { 
-    valid: true, 
-    parsed: { 
-      calculationId, 
-      modelName: sanitizedModelName, 
-      tokens: Math.floor(tokens), 
-      cloudRegion: sanitizedCloudRegion, 
-      co2Kg 
-    } 
+  return {
+    valid: true,
+    parsed: {
+      calculationId,
+      modelName: sanitizedModelName,
+      tokens: Math.floor(tokens),
+      cloudRegion: sanitizedCloudRegion,
+      co2Kg
+    }
   };
 }
 
@@ -71,7 +71,6 @@ serve(async (req) => {
   }
 
   try {
-    // Authentication check
     const authHeader = req.headers.get('Authorization');
     if (!authHeader?.startsWith('Bearer ')) {
       return new Response(JSON.stringify({ error: 'Authentication required' }), {
@@ -88,7 +87,6 @@ serve(async (req) => {
       global: { headers: { Authorization: authHeader } }
     });
 
-    // Validate user with getUser (Lovable Cloud requires passing token explicitly)
     const { data: { user }, error: userError } = await supabase.auth.getUser(token);
     if (userError || !user) {
       return new Response(JSON.stringify({ error: 'Invalid authentication token' }), {
@@ -102,7 +100,7 @@ serve(async (req) => {
     // Parse and validate input
     const body = await req.json();
     const validation = validateInput(body);
-    
+
     if (!validation.valid || !validation.parsed) {
       return new Response(JSON.stringify({ error: validation.error }), {
         status: 400,
@@ -131,7 +129,6 @@ serve(async (req) => {
       });
     }
 
-    // Verify ownership
     if (calculation.user_id !== userId) {
       return new Response(JSON.stringify({ error: 'Access denied' }), {
         status: 403,
@@ -139,28 +136,31 @@ serve(async (req) => {
       });
     }
 
+    if (!GEMINI_API_KEY) {
+      console.error("GEMINI_API_KEY is not configured");
+      return new Response(JSON.stringify({ error: "AI service not configured" }), {
+        status: 500,
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
+    }
+
     // Build context for AI
     const context = `Model: ${modelName}, Tokens: ${tokens}, Region: ${cloudRegion}, CO2: ${co2Kg} kg`;
 
-    // Call Lovable AI to generate smart recommendations
-    const response = await fetch('https://ai.gateway.lovable.dev/v1/chat/completions', {
+    // Call Gemini AI to generate smart recommendations
+    const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${GEMINI_API_KEY}`, {
       method: 'POST',
       headers: {
-        'Authorization': `Bearer ${LOVABLE_API_KEY}`,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        model: 'google/gemini-2.5-flash',
-        messages: [
-          {
-            role: 'system',
-            content: 'You are a sustainability expert for AI systems. Generate 3-5 specific, actionable recommendations to reduce carbon emissions for this AI workload. For each recommendation, provide: type (model_optimization, infrastructure, batching, or region), title (short), description (1-2 sentences), estimated reduction percentage (realistic number 5-40), and priority (high/medium/low). Return ONLY valid JSON array format.',
-          },
-          {
-            role: 'user',
-            content: `Generate carbon reduction recommendations for this AI workload: ${context}`,
-          },
-        ],
+        contents: [{
+          parts: [{
+            text: `You are a sustainability expert for AI systems. Generate 3-5 specific, actionable recommendations to reduce carbon emissions for this AI workload. For each recommendation, provide: type (model_optimization, infrastructure, batching, or region), title (short), description (1-2 sentences), estimated reduction percentage (realistic number 5-40), and priority (high/medium/low). Return ONLY valid JSON array format.
+            
+            Context: ${context}`
+          }]
+        }]
       }),
     });
 
@@ -173,15 +173,16 @@ serve(async (req) => {
     }
 
     const data = await response.json();
-    const aiResponse = data.choices[0].message.content.trim();
-    
+    const aiResponse = data.candidates?.[0]?.content?.parts?.[0]?.text?.trim();
+
     // Parse AI response
     let recommendations;
     try {
+      if (!aiResponse) throw new Error("Empty AI response");
       const jsonMatch = aiResponse.match(/\[[\s\S]*\]/);
       recommendations = JSON.parse(jsonMatch ? jsonMatch[0] : aiResponse);
     } catch (e) {
-      console.error('Failed to parse AI response, using fallback recommendations');
+      console.error('Failed to parse AI response, using fallback recommendations', e);
       recommendations = [
         {
           type: 'model_optimization',

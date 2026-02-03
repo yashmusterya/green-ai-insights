@@ -86,6 +86,45 @@ export default function Dashboard() {
           });
         });
         setRegionData(Array.from(regionMap.values()));
+      } else {
+        // Dummy data for demonstration
+        setStats({
+          totalCalculations: 124,
+          totalCO2: 45.2,
+          avgScore: 78,
+          totalEnergy: 128.5,
+        });
+
+        setTrendData([
+          { date: "1/20", co2: 5.2, energy: 12.1 },
+          { date: "1/21", co2: 4.8, energy: 11.5 },
+          { date: "1/22", co2: 6.1, energy: 14.2 },
+          { date: "1/23", co2: 5.5, energy: 12.8 },
+          { date: "1/24", co2: 7.2, energy: 16.5 },
+          { date: "1/25", co2: 6.8, energy: 15.1 },
+          { date: "1/26", co2: 5.9, energy: 13.7 },
+        ]);
+
+        setModelData([
+          { name: "gpt-4", co2: 18.5, count: 45 },
+          { name: "claude-3-opus", co2: 12.2, count: 30 },
+          { name: "llama-2-70b", co2: 8.4, count: 25 },
+          { name: "gemini-pro", co2: 4.1, count: 15 },
+          { name: "mistral-large", co2: 2.0, count: 9 },
+        ]);
+
+        setRegionData([
+          { name: "us-east-1", value: 450 },
+          { name: "eu-west-1", value: 280 },
+          { name: "asia-pacific", value: 150 },
+          { name: "us-west-2", value: 120 },
+        ]);
+
+        toast({
+          title: "Demo Mode",
+          description: "Showing sample data for visual demonstration.",
+          duration: 3000,
+        });
       }
     } catch (err) {
       console.error("Dashboard error:", err);
@@ -170,10 +209,10 @@ export default function Dashboard() {
                   {stats.avgScore >= 80
                     ? "Excellent"
                     : stats.avgScore >= 60
-                    ? "Good"
-                    : stats.avgScore >= 40
-                    ? "Fair"
-                    : "Needs Improvement"}
+                      ? "Good"
+                      : stats.avgScore >= 40
+                        ? "Fair"
+                        : "Needs Improvement"}
                 </p>
               </CardContent>
             </Card>

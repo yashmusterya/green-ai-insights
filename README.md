@@ -1,73 +1,55 @@
-# Welcome to your Lovable project
+# Sustainify AI — Intelligence with a Lighter Carbon Footprint
 
-## Project info
+Sustainify AI helps you measure, analyze, and reduce the environmental impact of your Generative AI systems. Calculate carbon footprint, optimize prompts, and get AI-powered sustainability recommendations.
 
-**URL**: https://lovable.dev/projects/bdb30739-f887-48db-906b-37f4061ee2d4
+## Features
 
-## How can I edit this code?
+- **Carbon Calculator**: Estimate the carbon emissions of your AI models based on token usage, model type, and cloud region.
+- **Prompt Optimizer**: AI-powered tool to refine your prompts, reducing token count and energy consumption while maintaining intent.
+- **Sustainability Recommendations**: Get tailored actionable advice to lower your AI infrastructure's carbon footprint.
+- **Interactive Chat**: Ask questions about Green AI practices and receive expert guidance.
 
-There are several ways of editing your application.
+## Tech Stack
 
-**Use Lovable**
+- **Frontend**: React, TypeScript, Vite, Tailwind CSS, shadcn/ui
+- **Backend**: Supabase (Edge Functions, Database, Auth)
+- **AI Integration**: Google Gemini (via Supabase Edge Functions)
+- **Charts**: Recharts
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/bdb30739-f887-48db-906b-37f4061ee2d4) and start prompting.
+## Getting Started
 
-Changes made via Lovable will be committed automatically to this repo.
+### Prerequisites
 
-**Use your preferred IDE**
+- Node.js & npm installed
+- Supabase account and project
+- Google Gemini API Key
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+### Installation
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+1. Clone the repository:
+   ```sh
+   git clone <YOUR_GIT_URL>
+   cd green-ai-insights
+   ```
 
-Follow these steps:
+2. Install dependencies:
+   ```sh
+   npm install
+   ```
+
+3. Set up Environment Variables:
+   - Create a `.env` file based on `.env.example` (if available) or ensure your Supabase project is linked.
+   - Set `GEMINI_API_KEY` in your Supabase Edge Functions secrets.
+
+4. Start the development server:
+   ```sh
+   npm run dev
+   ```
+
+## Deployment
+
+This project is configured for deployment on platforms like Vercel or Netlify. Ensure you also deploy the Supabase Edge Functions.
 
 ```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
-
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
+supabase functions deploy
 ```
-
-**Edit a file directly in GitHub**
-
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
-
-**Use GitHub Codespaces**
-
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
-
-## What technologies are used for this project?
-
-This project is built with:
-
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
-
-## How can I deploy this project?
-
-Simply open [Lovable](https://lovable.dev/projects/bdb30739-f887-48db-906b-37f4061ee2d4) and click on Share -> Publish.
-
-## Can I connect a custom domain to my Lovable project?
-
-Yes, you can!
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)

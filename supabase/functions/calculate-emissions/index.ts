@@ -29,10 +29,10 @@ const MODEL_ENERGY: Record<string, number> = {
 };
 
 // Input validation
-function validateInput(data: unknown): { 
-  valid: boolean; 
-  error?: string; 
-  parsed?: { modelName: string; tokens: number; gpuType: string; cloudRegion: string } 
+function validateInput(data: unknown): {
+  valid: boolean;
+  error?: string;
+  parsed?: { modelName: string; tokens: number; gpuType: string; cloudRegion: string }
 } {
   if (!data || typeof data !== 'object') {
     return { valid: false, error: 'Invalid request body' };
@@ -62,14 +62,14 @@ function validateInput(data: unknown): {
   const sanitizedModelName = modelName.replace(/[^a-zA-Z0-9-_.]/g, '').slice(0, 100);
   const sanitizedCloudRegion = cloudRegion.replace(/[^a-zA-Z0-9-_]/g, '').slice(0, 50);
 
-  return { 
-    valid: true, 
-    parsed: { 
-      modelName: sanitizedModelName, 
-      tokens: Math.floor(tokens), 
-      gpuType: sanitizedGpuType, 
-      cloudRegion: sanitizedCloudRegion 
-    } 
+  return {
+    valid: true,
+    parsed: {
+      modelName: sanitizedModelName,
+      tokens: Math.floor(tokens),
+      gpuType: sanitizedGpuType,
+      cloudRegion: sanitizedCloudRegion
+    }
   };
 }
 
@@ -96,7 +96,7 @@ serve(async (req) => {
       global: { headers: { Authorization: authHeader } }
     });
 
-    // Validate user with getUser (Lovable Cloud requires passing token explicitly)
+    // Validate user with getUser
     const { data: { user }, error: userError } = await supabase.auth.getUser(token);
     if (userError || !user) {
       return new Response(JSON.stringify({ error: 'Invalid authentication token' }), {
@@ -110,7 +110,7 @@ serve(async (req) => {
     // Parse and validate input
     const body = await req.json();
     const validation = validateInput(body);
-    
+
     if (!validation.valid || !validation.parsed) {
       return new Response(JSON.stringify({ error: validation.error }), {
         status: 400,
@@ -124,16 +124,16 @@ serve(async (req) => {
 
     // Get carbon intensity (use default if region not in list)
     const carbonIntensity = CARBON_INTENSITY[cloudRegion] || 450;
-    
+
     // Get base energy consumption (use default if model not in list)
     const baseEnergy = MODEL_ENERGY[modelName] || 0.25;
-    
+
     // Calculate total energy in kWh
     const energyKwh = (tokens / 1_000_000) * baseEnergy;
-    
+
     // Calculate CO2 in kg
     const co2Kg = (energyKwh * carbonIntensity) / 1000;
-    
+
     // Calculate sustainability score (0-100)
     const maxCo2 = 0.5;
     const sustainabilityScore = Math.max(0, Math.min(100, Math.round((1 - (co2Kg / maxCo2)) * 100)));
