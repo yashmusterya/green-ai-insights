@@ -17,7 +17,7 @@ export function Layout({ children }: LayoutProps) {
         <AppSidebar />
         <div className="flex-1 flex flex-col">
           {/* Header */}
-          <header className="h-16 border-b border-border bg-card/50 backdrop-blur-sm sticky top-0 z-10 flex items-center justify-between px-6 shadow-sm">
+          <header className="h-16 border-b border-border bg-background/95 backdrop-blur-md sticky top-0 z-10 flex items-center justify-between px-6 shadow-sm">
             <div className="flex items-center gap-3">
               <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-gradient-to-br from-primary to-eco-blue shadow-md">
                 <Leaf className="w-5 h-5 text-primary-foreground" />
@@ -38,7 +38,7 @@ export function Layout({ children }: LayoutProps) {
           </main>
 
           {/* Footer */}
-          <footer className="border-t border-border py-4 px-6 text-center text-sm text-muted-foreground bg-card/30 backdrop-blur-sm">
+          <footer className="border-t border-border py-6 px-6 text-center text-sm text-muted-foreground bg-card">
             <p>© 2025 Sustainify AI — Intelligence with a Lighter Carbon Footprint</p>
           </footer>
         </div>

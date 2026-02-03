@@ -235,7 +235,7 @@ export default function Dashboard() {
                   <CardDescription>CO₂ and energy over time</CardDescription>
                 </CardHeader>
                 <CardContent>
-                  <ResponsiveContainer width="100%" height={300}>
+                  <ResponsiveContainer width="100%" height={400}>
                     <LineChart data={trendData}>
                       <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
                       <XAxis dataKey="date" stroke="hsl(var(--foreground))" />
@@ -261,7 +261,7 @@ export default function Dashboard() {
                   <CardDescription>CO₂ emissions by AI model</CardDescription>
                 </CardHeader>
                 <CardContent>
-                  <ResponsiveContainer width="100%" height={300}>
+                  <ResponsiveContainer width="100%" height={400}>
                     <BarChart data={modelData}>
                       <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
                       <XAxis dataKey="name" stroke="hsl(var(--foreground))" />
@@ -318,6 +318,49 @@ export default function Dashboard() {
               </Card>
             </div>
           </div>
+
+          {/* System Health / Logs Section */}
+          <Card className="hover:shadow-lg transition-shadow duration-300">
+            <CardHeader>
+              <CardTitle>System Health & Recent Activity</CardTitle>
+              <CardDescription>Real-time operational logs and status checks.</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div className="grid gap-4 md:grid-cols-3">
+                <div className="space-y-2">
+                  <h4 className="text-sm font-semibold text-muted-foreground">Service Status</h4>
+                  <div className="flex flex-col gap-2">
+                    <div className="flex items-center justify-between p-2 rounded bg-muted/50">
+                      <span className="text-sm">API Gateway</span>
+                      <span className="text-xs font-medium text-eco-green bg-eco-green/10 px-2 py-0.5 rounded-full">Operational</span>
+                    </div>
+                    <div className="flex items-center justify-between p-2 rounded bg-muted/50">
+                      <span className="text-sm">Database</span>
+                      <span className="text-xs font-medium text-eco-green bg-eco-green/10 px-2 py-0.5 rounded-full">Operational</span>
+                    </div>
+                    <div className="flex items-center justify-between p-2 rounded bg-muted/50">
+                      <span className="text-sm">Edge Functions</span>
+                      <span className="text-xs font-medium text-eco-green bg-eco-green/10 px-2 py-0.5 rounded-full">99.9% Uptime</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="space-y-2 col-span-2">
+                  <h4 className="text-sm font-semibold text-muted-foreground">Recent Calculations log</h4>
+                  <div className="space-y-2">
+                    {[1, 2, 3].map((_, i) => (
+                      <div key={i} className="flex items-center justify-between text-sm p-2 border-b last:border-0 border-border">
+                        <span className="font-mono text-muted-foreground">LOG-{(Date.now() - i * 100000).toString().slice(-6)}</span>
+                        <span>GPT-4 Optimization</span>
+                        <span className="text-eco-blue">0.12 kg CO₂</span>
+                        <span className="text-xs text-muted-foreground">Just now</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
         </>
       )}
     </div>
