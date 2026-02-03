@@ -69,60 +69,62 @@ All colors MUST be HSL.
   }
 
   .dark {
-    /* EcoTech Dark Mode - Green Night Palette */
-    --background: 145 65% 6%;
-    --foreground: 145 30% 85%;
+    /* EcoTech Dark Mode - New Gradient Palette */
+    /* Castleton green #0A5C36 → #0F5132 → British racing #14452F → Dark green #18392B → Gunmetal #1D2E28 */
+    --background: 155 75% 10%;
+    --foreground: 155 20% 90%;
 
-    --card: 145 50% 8%;
-    --card-foreground: 145 30% 85%;
+    --card: 153 68% 12%;
+    --card-foreground: 155 20% 90%;
 
-    --popover: 145 50% 8%;
-    --popover-foreground: 145 30% 85%;
+    --popover: 152 53% 11%;
+    --popover-foreground: 155 20% 90%;
 
     --primary: 75 89% 63%;
-    --primary-foreground: 145 65% 6%;
+    --primary-foreground: 155 75% 10%;
 
-    --secondary: 145 50% 22%;
-    --secondary-foreground: 145 30% 85%;
+    --secondary: 155 75% 20%;
+    --secondary-foreground: 155 20% 90%;
 
-    --muted: 145 40% 12%;
-    --muted-foreground: 145 30% 70%;
+    --muted: 149 42% 16%;
+    --muted-foreground: 155 25% 70%;
 
-    --accent: 145 54% 49%;
-    --accent-foreground: 145 65% 6%;
+    --accent: 155 75% 20%;
+    --accent-foreground: 155 20% 90%;
 
     --destructive: 0 62.8% 50%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 145 40% 18%;
-    --input: 145 40% 15%;
+    --border: 152 40% 18%;
+    --input: 149 42% 16%;
     --ring: 75 89% 63%;
 
-    /* Custom dark sustainability colors */
-    --eco-green: 145 54% 49%;
-    --forest-green: 145 50% 22%;
+    /* Custom dark sustainability colors - matching the new palette */
+    --eco-green: 155 75% 20%;
+    --forest-green: 153 68% 19%;
     --energy-lime: 75 89% 63%;
     --sky-blue: 199 89% 62%;
     --warm-yellow: 44 86% 62%;
+    --gunmetal: 159 24% 15%;
     
-    /* Dark gradients */
-    --gradient-eco: linear-gradient(135deg, hsl(145 54% 49%) 0%, hsl(199 89% 62%) 100%);
-    --gradient-earth: linear-gradient(180deg, hsl(145 50% 22%) 0%, hsl(145 54% 49%) 100%);
-    --gradient-bg: linear-gradient(135deg, hsl(145 54% 49% / 0.05) 0%, hsl(199 89% 62% / 0.05) 100%);
+    /* Dark gradients - using the new color palette */
+    --gradient-eco: linear-gradient(135deg, hsl(155 75% 20%) 0%, hsl(153 68% 19%) 50%, hsl(152 53% 17%) 100%);
+    --gradient-earth: linear-gradient(180deg, hsl(155 75% 20%) 0%, hsl(149 42% 16%) 50%, hsl(159 24% 15%) 100%);
+    --gradient-bg: linear-gradient(135deg, hsl(155 75% 20% / 0.15) 0%, hsl(153 68% 19% / 0.1) 50%, hsl(159 24% 15% / 0.2) 100%);
     
     /* Dark shadows */
-    --shadow-sm: 0 2px 8px hsl(0 0% 0% / 0.3);
-    --shadow-md: 0 4px 16px hsl(0 0% 0% / 0.4);
-    --shadow-lg: 0 8px 32px hsl(0 0% 0% / 0.5);
-    --shadow-glow: 0 0 20px hsl(145 54% 49% / 0.4);
+    --shadow-sm: 0 2px 8px hsl(159 24% 5% / 0.4);
+    --shadow-md: 0 4px 16px hsl(159 24% 5% / 0.5);
+    --shadow-lg: 0 8px 32px hsl(159 24% 5% / 0.6);
+    --shadow-glow: 0 0 20px hsl(155 75% 20% / 0.5);
 
-    --sidebar-background: 145 60% 5%;
-    --sidebar-foreground: 145 30% 85%;
+    --sidebar-background: 159 24% 13%;
+    --sidebar-foreground: 155 20% 90%;
     --sidebar-primary: 75 89% 63%;
-    --sidebar-primary-foreground: 145 65% 6%;
-    --sidebar-accent: 145 40% 12%;
-    --sidebar-accent-foreground: 145 30% 85%;
-    --sidebar-border: 145 40% 15%;
+    --sidebar-primary-foreground: 155 75% 10%;
+    --sidebar-accent: 149 42% 16%;
+    --sidebar-accent-foreground: 155 20% 90%;
+    --sidebar-border: 152 40% 18%;
     --sidebar-ring: 75 89% 63%;
   }
 }
@@ -137,7 +139,7 @@ All colors MUST be HSL.
     background-image: var(--gradient-bg);
   }
 
-  /* Custom Eco Cursor */
+  /* Custom Eco Cursor - Smooth movement with no transition delay on position */
   .eco-cursor {
     position: fixed;
     width: 12px;
@@ -147,7 +149,7 @@ All colors MUST be HSL.
     pointer-events: none;
     z-index: 9999;
     transform: translate(-50%, -50%);
-    transition: transform 0.15s ease-out, background 0.2s;
+    will-change: left, top;
     box-shadow: 0 0 10px hsl(var(--primary) / 0.6);
   }
 
@@ -160,7 +162,8 @@ All colors MUST be HSL.
     pointer-events: none;
     z-index: 9998;
     transform: translate(-50%, -50%);
-    transition: all 0.15s ease-out;
+    will-change: left, top, width, height;
+    transition: width 0.2s ease-out, height 0.2s ease-out, border-color 0.2s ease-out, box-shadow 0.2s ease-out;
   }
 
   .eco-cursor-glow.hovering {
