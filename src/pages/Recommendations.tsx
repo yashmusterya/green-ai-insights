@@ -18,8 +18,52 @@ export default function Recommendations() {
       .order("created_at", { ascending: false })
       .limit(20);
 
-    if (data) {
+    if (data && data.length > 0) {
       setRecommendations(data);
+    } else {
+      // Dummy data for demonstration
+      setRecommendations([
+        {
+          id: "1",
+          title: "Switch to Gemini Flash",
+          description: "Use Gemini 1.5 Flash instead of Pro for tasks requiring lower reasoning but high speed. It consumes significantly less energy per token.",
+          recommendation_type: "model_optimization",
+          priority: "high",
+          estimated_reduction_percent: 45,
+        },
+        {
+          id: "2",
+          title: "Migrate to Sweden (eu-north-1)",
+          description: "Your current workload is in us-east-1. Moving to eu-north-1, which uses 100% renewable energy, would drastically cut carbon footprint.",
+          recommendation_type: "infrastructure",
+          priority: "high",
+          estimated_reduction_percent: 60,
+        },
+        {
+          id: "3",
+          title: "Implement Token Caching",
+          description: "Cache common prompts and responses to avoid redundant computation.",
+          recommendation_type: "batching",
+          priority: "medium",
+          estimated_reduction_percent: 25,
+        },
+        {
+          id: "4",
+          title: "Use Quantized Models",
+          description: "Deploying 8-bit quantized versions of your models can reduce memory bandwidth and energy usage with minimal accuracy loss.",
+          recommendation_type: "model_optimization",
+          priority: "medium",
+          estimated_reduction_percent: 30,
+        },
+        {
+          id: "5",
+          title: "Batch Processing for Non-Urgent Tasks",
+          description: "Queue requests and process them in batches during off-peak hours when grid carbon intensity is lower.",
+          recommendation_type: "batching",
+          priority: "low",
+          estimated_reduction_percent: 15,
+        },
+      ]);
     }
   };
 

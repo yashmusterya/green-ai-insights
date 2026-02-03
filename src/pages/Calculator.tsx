@@ -48,11 +48,49 @@ export default function Calculator() {
         description: "Your emissions have been calculated successfully",
       });
     } catch (error: any) {
-      console.error("Calculation error:", error);
+      console.warn("Backend calculation failed, switching to client-side calculation:", error);
+
+      // Client-side fallback calculation
+      const CARBON_INTENSITY: Record<string, number> = {
+        'us-west-1': 350,
+        'us-east-1': 450,
+        'eu-west-1': 280,
+        'eu-central-1': 420,
+        'ap-southeast-1': 700,
+        'ap-northeast-1': 550,
+      };
+
+      const MODEL_ENERGY: Record<string, number> = {
+        'gpt-4': 0.47,
+        'gpt-3.5-turbo': 0.06,
+        'claude-3-opus': 0.45,
+        'claude-3-sonnet': 0.15,
+        'gemini-pro': 0.12,
+        'llama-2-70b': 0.35,
+        'mistral-large': 0.28,
+      };
+
+      const tokens = parseInt(formData.tokens);
+      const intensity = CARBON_INTENSITY[formData.cloudRegion] || 450;
+      const energyPerMillion = MODEL_ENERGY[formData.modelName] || 0.25;
+
+      const energyKwh = (tokens / 1_000_000) * energyPerMillion;
+      const co2Kg = (energyKwh * intensity) / 1000;
+
+      const maxCo2 = 0.5;
+      const score = Math.max(0, Math.min(100, Math.round((1 - (co2Kg / maxCo2)) * 100)));
+
+      setResults({
+        calculationId: "local-demo-id",
+        energyKwh,
+        co2Kg,
+        sustainabilityScore: score,
+        carbonIntensity: intensity
+      });
+
       toast({
-        title: "❌ Calculation Failed",
-        description: error.message,
-        variant: "destructive",
+        title: "✅ Calculation Complete (Local)",
+        description: "Emissions calculated locally (Backend unavailable)",
       });
     } finally {
       setLoading(false);
@@ -67,12 +105,12 @@ export default function Calculator() {
       </div>
 
       <div className="grid gap-6 lg:grid-cols-2">
-      {/* Input Form */}
-      <Card className="hover:shadow-lg transition-shadow duration-300">
-        <CardHeader>
-          <CardTitle>Workload Details</CardTitle>
-          <CardDescription>Enter your AI model and infrastructure information</CardDescription>
-        </CardHeader>
+        {/* Input Form */}
+        <Card className="hover:shadow-lg transition-shadow duration-300">
+          <CardHeader>
+            <CardTitle>Workload Details</CardTitle>
+            <CardDescription>Enter your AI model and infrastructure information</CardDescription>
+          </CardHeader>
           <CardContent className="space-y-4">
             <div className="space-y-2">
               <Label htmlFor="modelName">AI Model *</Label>
@@ -184,10 +222,10 @@ export default function Calculator() {
                   {results.sustainabilityScore >= 80
                     ? "Excellent"
                     : results.sustainabilityScore >= 60
-                    ? "Good"
-                    : results.sustainabilityScore >= 40
-                    ? "Fair"
-                    : "Needs Improvement"}
+                      ? "Good"
+                      : results.sustainabilityScore >= 40
+                        ? "Fair"
+                        : "Needs Improvement"}
                 </p>
               </CardContent>
             </Card>
